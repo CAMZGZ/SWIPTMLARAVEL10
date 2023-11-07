@@ -43,6 +43,12 @@
                 onclick="window.location.href='{{route('curso.faltas', $curso->id)}}'">
                     <i class="fas fa-fw fa-user-slash"></i></button>
         </div>
+        <div style="display: inline-block; margin-top: 0px;">
+            <button class="btn btn-warning" type="submit" role="button"
+                data-toggle="tooltip" title="Conteo en tiempo Real" 
+                onclick="window.location.href='{{route('curso.conteotr', $curso->id)}}'">
+                <i class="bi bi-list-check"></i></button>
+        </div>
     </div> 
     @endif
         

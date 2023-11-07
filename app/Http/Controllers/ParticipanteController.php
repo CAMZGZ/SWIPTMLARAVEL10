@@ -123,7 +123,8 @@ class ParticipanteController extends Controller
         $curso=Curso::find($curso_id);
 
         $participantes = Participante::with(['personal.departamento', 'tipos_asistencia'])->where('curso_id', $curso->id)->get();
-        return view('curso.listas', compact('curso', 'participantes'));
+        $vista ='';
+        return view('curso.listas', compact('curso', 'participantes', 'vista'));
 
     }
 

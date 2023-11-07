@@ -13,10 +13,15 @@
         <label for="nombre">Nombre del curso:</label>
         <input type="text" name="nombre_curso" id="nombre_curso" class="form-control">
     </div>
-    <div class="form-group">
-        <label for="duracion">Duración del curso:</label>
-        <input type="text" name="duracion" id="duracion" class="form-control">
+    <div class="row g-7">
+        <div class="form-group col-span-6">
+            <label for="duracion">Duración (horas) del curso:</label>
+            <input type="text" name="duracion" id="duracion" class="form-control">
+        </div>
+        <div class="col-span-1"
+
     </div>
+    
     <div class="form-group">
         <label for="fecha_inicio">Fecha de inicio:</label>
         <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">

@@ -52,6 +52,9 @@ Route::post('/personal/activar', [PersonalController::class, 'activar'])->name('
 Route::get('/personal/bajas', [PersonalController::class, 'bajas'])->name('personal.bajas');
 Route::resource('personal', PersonalController::class);
 
+//Reportes
+Route::get('/curso/{curso}/conteotr', [CursoController::class, 'conteotr'])->name('curso.conteotr');
+
 //Curso
 Route::get('/curso/{curso}/faltas', [CursoController::class, 'faltas'])->name('curso.faltas');
 Route::get('/curso/{curso}/justificar', [CursoController::class, 'justificar'])->name('curso.justificar');

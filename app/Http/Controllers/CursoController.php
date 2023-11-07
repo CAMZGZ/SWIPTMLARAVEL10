@@ -6,12 +6,14 @@ use App\Models\Curso;
 use App\Http\Controllers\Controller;
 use App\Models\Asesor;
 use App\Models\Curso_categoria;
+use App\Models\departamento;
 use Illuminate\Http\Request;
 use App\Models\Personal;
 use App\Models\Empresa;
 use App\Models\Examene;
 use App\Models\participante;
 use App\Models\TiposAsistencia;
+use Illuminate\Support\Facades\DB;
 
 class CursoController extends Controller
 {
@@ -153,4 +155,37 @@ class CursoController extends Controller
         return view('participante.edit', compact('curso', 'participantes', 'tipos_asistencia','vista'));
     }
 
+    /*
+    Reporte Conteo TR 
+    */
+    public function conteotr(Curso $curso)
+    {
+        $participantes = DB::table('participantes')
+        ->join('personals', 'personals.id', '=', 'participantes.personal_id')
+        ->join('departamentos', 'departamentos.id', '=', 'personals.departamento_id')
+        ->select('departamentos.nombre')
+        ->selectRaw('COUNT(*) as nparticipantes')
+        ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id = 0 THEN 1 ELSE NULL END) as participantesf')
+        ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id <> 0 THEN 1 ELSE NULL END) as participantesa')
+        ->selectRaw('MAX(departamentos.ceco) as ceco')
+        ->groupBy( 'departamentos.nombre' )
+        ->where('participantes.curso_id', $curso->id)
+        ->get();
+        /*
+
+        $participantes = DB::table('participantes')
+        ->join('personals', 'personals.id', '=', 'participantes.personal_id')
+        ->join('departamentos', 'departamentos.id', '=', 'personals.departamento_id')
+        ->select('departamentos.nombre')
+        ->selectRaw('COUNT(*) as nparticipantes')
+        ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id = 0 THEN 1 ELSE NULL END) as participantesf')
+        ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id <> 0 THEN 1 ELSE NULL END) as participantesa')
+        ->selectRaw('MAX(departamentos.ceco) as ceco')
+        ->groupBy( 'departamentos.nombre' )
+        ->where('participantes.curso_id', $curso->id)
+        ->get();
+        */
+        return view('curso.conteotr', compact('curso', 'participantes'));
+    }
+    
 }
