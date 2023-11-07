@@ -68,37 +68,6 @@ class DepartamentoController extends Controller
         //
     }
 
-        /*
-    Reporte Conteo TR 
-    */
-    public function conteotr( $curso)
-    {
-        $curso = Curso::where('id', $curso)->first();
-
-        $participantes = DB::table('participantes')
-    ->join('personals', 'personals.id', '=', 'participantes.personal_id')
-    ->join('departamentos', 'departamentos.id', '=', 'personals.departamento_id')
-    ->select('departamentos.nombre')
-    ->selectRaw('COUNT(*) as nparticipantes')
-    ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id = 0 THEN 1 ELSE NULL END) as participantesf')
-    ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id <> 0 THEN 1 ELSE NULL END) as participantesa')
-    ->selectRaw('MAX(departamentos.ceco) as ceco')
-    ->groupBy( 'departamentos.nombre' )
-    ->where('participantes.curso_id', $curso->id)
-    ->get();
-
-        /*
-        $curso = Curso::where('id', $curso)->first();
-        $participantes = DB::table('participantes')
-        ->join('personals', 'personals.id', '=', 'participantes.personal_id')
-        ->join('departamentos', 'departamentos.id', '=', 'personals.departamento_id')
-        ->select('departamentos.nombre')
-        ->selectRaw('COUNT(*) as nparticipantes, COUNT(CASE WHEN participantes.tipo_asistencia_id = 0 THEN 1 ELSE NULL END) as participantesf, COUNT(CASE WHEN participantes.tipo_asistencia_id <> 0 THEN 1 ELSE NULL END) as participantesa')
-        ->groupBy( 'departamentos.nombre' )
-        ->where('participantes.curso_id', $curso->id)
-        ->get();
-        */
-
-        return view('curso.conteotr', compact('curso', 'participantes'));
-    }
+     
+    
 }

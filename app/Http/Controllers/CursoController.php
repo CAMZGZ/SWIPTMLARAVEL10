@@ -56,8 +56,6 @@ class CursoController extends Controller
     $curso->curso_categoria_id = $request->input('categoria_id');
     $curso->save();
 
-   
-
     // Guardar el ID del curso en la sesión para usarlo en el siguiente formulario
     $curso_id= $curso->id;
 
@@ -185,7 +183,24 @@ class CursoController extends Controller
         ->where('participantes.curso_id', $curso->id)
         ->get();
         */
-        return view('curso.conteotr', compact('curso', 'participantes'));
+
+        $departamentos = [];
+
+        foreach ($participantes as $p){
+            $d=departamento::where('ceco', $p->ceco)->first();
+            $j =Personal::where('id', $d->personal_id)->first();
+            $departamentos[] = [
+                'ceco' => $p->ceco,
+                'area' => $p->nombre,
+                'nparticipantes' => $p->nparticipantes,
+                'participantesa' => $p->participantesa,
+                'participantesf' => $p->participantesf,
+                'porcentaje' => number_format(($p->participantesa / $p->nparticipantes)*100, 2), 
+                'jefe' => $j->p_apellido.' '.$j->s_apellido.' '.$j->nombre,
+            ];
+        }
+
+        return view('curso.conteotr', compact('curso', 'participantes','departamentos'));
     }
     
 }

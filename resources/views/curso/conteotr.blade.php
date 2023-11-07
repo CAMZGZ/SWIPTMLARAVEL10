@@ -23,39 +23,44 @@
             
             <thead>
                 <tr>
-                    <th colspan="6" class="table-success text-center">
+                    <th colspan="7" class="table-success text-center">
                         <h1><b>Asistencia a curso: {{$curso->nombre_curso}}</b></h1>
-                        <h2><b> {{$curso->fecha_inicio}} a {{$curso->fecha_fin}} </b></h2>
+                        <h2><b> {{ \Carbon\Carbon::parse($curso->fecha_inicio)->format('d') }} al 
+                            {{ \Carbon\Carbon::parse($curso->fecha_fin)->format('d') }} de 
+                            {{ \Carbon\Carbon::parse($curso->fecha_inicio)->formatLocalized('%B') }}
+                            de {{ \Carbon\Carbon::parse($curso->fecha_inicio)->format('Y') }}</b></h2>
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="6" class="table-warning text-center">
-                        <h2><b> {{ now()->format('d/m/Y') }} </b></h2>
+                    <th colspan="7" class="table-warning text-center">
+                        <h3><b> {{ now()->format('d/m/Y') }} </b></h3>
                     </th>
                 </tr>
                 
                 <tr class="table-primary text-center">
-                    <th>CR</th>
+                    <th class="text-center"">CR</th>
+                    <th>Encargado</th>
                     <th class="text-justify">Área</th>
-                    <th >Socios</th>
-                    <th >Asistencias</th>
-                    <th >Faltas</th>
-                    <th >Porcentaje</th>
+                    <th class="text-center"">Socios</th>
+                    <th class="text-center"">Asistencias</th>
+                    <th class="text-center"">Faltas</th>
+                    <th class="text-center"">Porcentaje</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($participantes as $p)
-                @if ($p->participantesa===$p->nparticipantes)    
+                @foreach ($departamentos as $d)
+                @if ($d['participantesa']===$d['nparticipantes'])    
                 <tr class="table-success text-center">
                     @else
                     <tr class="text-center">
                         @endif
-                        <td>{{ $p->ceco }}</td>
-                        <td class="text-justify">{{ $p->nombre }}</td>
-                        <td >{{ $p->nparticipantes }}</td>
-                        <td>{{ $p->participantesa }}</td>
-                        <td>{{ $p->participantesf }}</td>                        
-                        <td>{{ number_format(($p->participantesa / $p->nparticipantes)*100, 2)  }} %</td=>
+                        <td>{{ $d['ceco'] }}</td>
+                        <td class="text-justify">{{$d['jefe']}}</td>
+                        <td class="text-justify">{{ $d['area'] }}</td>
+                        <td >{{ $d['nparticipantes'] }}</td>
+                        <td>{{ $d['participantesa'] }}</td>
+                        <td>{{ $d['participantesf'] }}</td>                        
+                        <td>{{ $d['porcentaje']}} %</td=>
                     </tr>
                 @endforeach
             </tbody>
@@ -64,7 +69,7 @@
 </div>    
         
 </div>
-<div id="example-table"></div>
+
 @stop
 
 @section('css')
