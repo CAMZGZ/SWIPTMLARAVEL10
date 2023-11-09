@@ -24,6 +24,10 @@ class departamento extends Model
     {
         return $this->hasManyThrough(Participante::class, Personal::class);
     }
+    public function personal (): BelongsTo
+    {
+        return $this->belongsTo(personal::class);
+    }
 
 
 }

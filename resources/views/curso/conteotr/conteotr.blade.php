@@ -10,15 +10,23 @@
 
 
 @section('content')
+
 <br>
 <div class="card">
     <div class="card-head">
         <p></p>
+        
         <!--<h2 style="text-indent: 0.4cm;"><b>Conteo en tiempo Real</b></h2>-->
     </div>
     
     <div class="card-body">
+        <button class="btn btn-danger" type="submit" role="button"
+        data-toggle="tooltip" title="Descargar en PDF" 
+        onclick="window.location.href='{{route('curso.pdfconteo', $curso->id)}}'">
+        <i class="fas fa-fw fa-file-pdf"> </i></button>
+    </div>
 
+    <div class="card-body">
         <table id="CursosT" class="table table-sm table-striped">
             
             <thead>
@@ -65,6 +73,13 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
+    <div class="text-right mb-2">
+
+        <a class="btn btn-warning" 
+        href="{{ route('curso.listas', $curso->id) }}" 
+        role="button" onclick=""><i class="fas fa-fw fa-arrow-left"></i></a>
+    
     </div>    
 </div>    
         
@@ -74,6 +89,7 @@
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
+
 
 @stop
 
@@ -99,37 +115,8 @@
             },
             "autoWidth": false,
             "responsive": true,
-            "dom": "Bfrtip",
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                    customize: function(doc) {
-                        // Personaliza el formato de los datos exportados
-                        var table = doc.content[1].table;
-                        var rowLength = table.body[0].length;
-                        for (var i = 0; i < rowLength; i++) {
-                        table.body[0][i].fillColor = '#007bff'; // Color de encabezados
-                        table.body[0][i].color = '#fff'; // Color de texto de encabezados
-                        }
-                    }
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                    customize: function(doc) {
-                        // Personaliza el formato de los datos exportados
-                        var table = doc.content[1].table;
-                        var rowLength = table.body[0].length;
-                        for (var i = 0; i < rowLength; i++) {
-                        table.body[0][i].fillColor = '#007bff'; // Color de encabezados
-                        table.body[0][i].color = '#fff'; // Color de texto de encabezados
-                        }
-                    }
-                    }
-                }
-            ]
+            
+            
         });
         });
 

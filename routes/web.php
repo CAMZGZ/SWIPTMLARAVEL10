@@ -10,6 +10,8 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\ExameneController;
 use App\Http\Controllers\ParticipanteController;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,6 +56,9 @@ Route::resource('personal', PersonalController::class);
 
 //Reportes
 Route::get('/curso/{curso}/conteotr', [CursoController::class, 'conteotr'])->name('curso.conteotr');
+Route::get('/curso/{curso}/pdfconteo', [CursoController::class, 'conteotrd'])->name('curso.pdfconteo');
+
+
 
 //Curso
 Route::get('/curso/{curso}/faltas', [CursoController::class, 'faltas'])->name('curso.faltas');

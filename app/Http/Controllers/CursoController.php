@@ -14,6 +14,9 @@ use App\Models\Examene;
 use App\Models\participante;
 use App\Models\TiposAsistencia;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
 
 class CursoController extends Controller
 {
@@ -169,20 +172,6 @@ class CursoController extends Controller
         ->groupBy( 'departamentos.nombre' )
         ->where('participantes.curso_id', $curso->id)
         ->get();
-        /*
-
-        $participantes = DB::table('participantes')
-        ->join('personals', 'personals.id', '=', 'participantes.personal_id')
-        ->join('departamentos', 'departamentos.id', '=', 'personals.departamento_id')
-        ->select('departamentos.nombre')
-        ->selectRaw('COUNT(*) as nparticipantes')
-        ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id = 0 THEN 1 ELSE NULL END) as participantesf')
-        ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id <> 0 THEN 1 ELSE NULL END) as participantesa')
-        ->selectRaw('MAX(departamentos.ceco) as ceco')
-        ->groupBy( 'departamentos.nombre' )
-        ->where('participantes.curso_id', $curso->id)
-        ->get();
-        */
 
         $departamentos = [];
 
@@ -200,7 +189,45 @@ class CursoController extends Controller
             ];
         }
 
-        return view('curso.conteotr', compact('curso', 'participantes','departamentos'));
+        return view('curso.conteotr.conteotr', compact('curso', 'participantes','departamentos'));
     }
+
+    public function conteotrd(Curso $curso)
+    {
+        $participantes = DB::table('participantes')
+            ->join('personals', 'personals.id', '=', 'participantes.personal_id')
+            ->join('departamentos', 'departamentos.id', '=', 'personals.departamento_id')
+            ->select('departamentos.nombre')
+            ->selectRaw('COUNT(*) as nparticipantes')
+            ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id = 0 THEN 1 ELSE NULL END) as participantesf')
+            ->selectRaw('COUNT(CASE WHEN participantes.tipo_asistencia_id <> 0 THEN 1 ELSE NULL END) as participantesa')
+            ->selectRaw('MAX(departamentos.ceco) as ceco')
+            ->groupBy('departamentos.nombre')
+            ->where('participantes.curso_id', $curso->id)
+            ->get();
+
+        $departamentos = [];
+
+        foreach ($participantes as $p) {
+            $d = Departamento::where('ceco', $p->ceco)->first();
+            $j = Personal::find($d->personal_id);
+
+            $departamentos[] = [
+                'ceco' => $p->ceco,
+                'area' => $p->nombre,
+                'nparticipantes' => $p->nparticipantes,
+                'participantesa' => $p->participantesa,
+                'participantesf' => $p->participantesf,
+                'porcentaje' => number_format(($p->participantesa / $p->nparticipantes) * 100, 2),
+                'jefe' => $j ? $j->p_apellido.' '.$j->s_apellido.' '.$j->nombre : 'N/A',
+            ];
+        }
+
+        $pdf = Pdf::loadView('curso.conteotr.pdf', compact('curso', 'participantes','departamentos') );
+        return $pdf->download('CTR: '.$curso->nombre_curso.'.pdf');
+        
+    }
+
+
     
 }
