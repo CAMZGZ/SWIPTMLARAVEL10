@@ -43,4 +43,5 @@ class curso extends Model
     {
         return $this->hasMany(participante::class);
     }
+    
 }

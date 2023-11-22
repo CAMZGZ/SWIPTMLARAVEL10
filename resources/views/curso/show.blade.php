@@ -6,7 +6,7 @@
 @section('content_header')
 @stop
 
-@section('plugins.Sweetalert2', true)
+@section('plugins.Datatables', true)
 
 @section('content')
 <div class="card">
@@ -76,26 +76,4 @@
 
 @section('js')
     <script> console.log('Hi!'); </script>
-    
-    <script>
-        const deleteForm = document.getElementById('delete-form');
-        delete.addEventListener('submit', function(event) {
-        event.preventDefault();
-        Swal.fire({
-            title: '¿Estás seguro de eliminarlo?',
-            text: "Esta acción no se puede deshacer",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                deleteForm.submit();
-            }
-        });
-    });
-    </script>
-
 @stop

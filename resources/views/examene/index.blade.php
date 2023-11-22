@@ -18,10 +18,10 @@
             </div>
             <div class="card-body">
                 <div class="text-right mb-2">
-                    <a class="btn btn-primary" href="{{route('examen.create')}}" role="button" onclick="">
+                    <a class="btn btn-primary" href="{{route('examene.create')}}" role="button" onclick="">
                         <i class="fas fa-fw fa-plus"> </i>
                     </a>
-                    <a class="btn btn-warning" href="{{ route('examen.bajas') }}" role="button" onclick="">
+                    <a class="btn btn-warning" href="{{ route('examene.bajas') }}" role="button" onclick="">
                         <i class="fas fa-fw fa-trash"></i>
                     </a>
                 </div>
@@ -32,28 +32,24 @@
                             <th>Curso</th> 
                             <th>Promedio</th>
                             <th>Contestado</th>
-                            <th> Opciones</th>
                         </tr>    
                     </thead>
                     <tbody>
                         @forelse ($examenes as $e )
                         <tr class="align-middle">
                             <td> 
-                                <a href="{{route('examen.show', $e->id)}}" class="text-decoration-none text-reset"> 
+                                <a href="{{route('examene.show', $e->id)}}" class="text-decoration-none text-reset"> 
                                     {{$e->curso-> nombre_curso}}
                             </a>
                         </td>
-                            <td></td>
-                            <td></td>
-                            <td class="align-middle"> 
-                            <center>
-                                <a class="btn btn-info" 
-                                href="{{route('examen.edit', $e->id)}}" role="button" onclick="">
-                                <i class="fas fa-fw fa-pen"></i>
-                                </a>
-                                
-                            </center>
-                            </td>
+                            <td>{{$e->contestados}}</td>
+
+                            @if ($e->contestados===0)
+                                <td> 0 </td>
+                            @else
+                            <td>{{number_format(($e->total / $e->contestados), 2)}}</td>
+
+                            @endif
                             
                         </tr>    
                         @empty

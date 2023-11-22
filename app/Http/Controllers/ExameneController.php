@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Examene;
 use App\Http\Controllers\Controller;
+use App\Models\Calificacion;
+use App\Models\curso;
+use App\Models\participante;
+use App\Models\personal;
 use Illuminate\Http\Request;
 
 class ExameneController extends Controller
@@ -14,7 +18,13 @@ class ExameneController extends Controller
     public function index()
     {
         //
-        $examenes = Examene::with('curso')->where('estatus', 1)->get();
+        $examenes = Examene::with('curso')
+    ->where('estatus', 1)
+    ->selectRaw('*, 
+        (SELECT COUNT(*) FROM calificacions WHERE examenes.id = calificacions.examen_id) as contestados,
+        (SELECT SUM(calificacion) FROM calificacions WHERE examenes.id = calificacions.examen_id) as total')
+    ->get();
+        
         return view('examene.index', compact('examenes'));
     }
 
@@ -39,7 +49,10 @@ class ExameneController extends Controller
      */
     public function show(Examene $examene)
     {
-        //
+        $curso = Curso::with(['participante.personal'])->where('id', $examene->curso_id)->first();
+        $examenes = Calificacion::with(['personal.departamento'])->where('examen_id', $examene->id)->get();
+
+        return view('examene.show', compact('curso', 'examenes', 'examene'));
     }
 
     /**

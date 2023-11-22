@@ -41,13 +41,8 @@ class PersonalController extends Controller
     public function show(personal $personal)
     {
         //
-        $departamento = departamento::where('id', $personal->departamento_id)->first();
-        $jefe = Personal::where ('id', $departamento->personal_id)->first();
-
-        if(!$jefe){
-        $jefe='';
-        }
-            return view('personal.show', compact('personal', 'departamento', 'jefe'));
+        
+            return view('personal.show', compact('personal'));
 
         
     }

@@ -41,16 +41,21 @@ class ParticipanteController extends Controller
         $curso_id = $request->input('curso_id');
         $personal_ids = $request->input('personal');
 
-        $participantes = [];
-        foreach ($personal_ids as $personal_id) {
-            $participante = new Participante;
-            $participante->curso_id = $curso_id;
-            $participante->personal_id = $personal_id;
-            $participante->save();
-            $participantes[] = $participante;
+        if(!empty($personal_ids)){
+            $participantes = [];
+            foreach ($personal_ids as $personal_id) {
+                $participante = new Participante;
+                $participante->curso_id = $curso_id;
+                $participante->personal_id = $personal_id;
+                $participante->save();
+                $participantes[] = $participante;
+            }
+    
         }
 
-        return redirect()->route('curso.show', $curso_id);
+        $participantes= participante::where('curso_id', $curso_id)->get();
+        $curso = curso::find($curso_id);
+        return redirect()->route ('curso.participantes', compact('curso', 'participantes'));
     }
 
     public function agregarSindicalizados(Request $request)
@@ -73,7 +78,9 @@ class ParticipanteController extends Controller
                 $participantes[] = $participante;
             }
         }
-        return redirect()->route('curso.show', $curso_id);
+        $participantes= participante::where('curso_id', $curso_id)->get();
+        $curso = curso::find($curso_id);
+        return redirect()->route ('curso.participantes', compact('curso', 'participantes'));
     }
 
     public function agregarEmpledados (Request $request)
@@ -99,8 +106,9 @@ class ParticipanteController extends Controller
         }
 
         
-        return redirect()->route('curso.show', $curso_id);
-    }
+        $participantes= participante::where('curso_id', $curso_id)->get();
+        $curso = curso::find($curso_id);
+        return redirect()->route ('curso.participantes', compact('curso', 'participantes'));    }
 
     public function delete (Request $request)
     {
@@ -110,18 +118,21 @@ class ParticipanteController extends Controller
     public function update (Request $request, curso $curso){
         $curso_id = $request->input('curso_id');
         $participantes_ids = $request->input('participante');
-        $participantes = [];
-        foreach ($participantes_ids as $participante_id) {
-            $participante = Participante::find($participante_id);
-            $participante->tipo_asistencia_id = $request->input('tipo_asistencia_id');
-            if($request->input('vista') == 'asistencia'){
-                $participante->fecha_asistencia = $request->input('fecha');
-            }
-            $participante->save();
-            $participantes[] = $participante;
-        }
-        $curso=Curso::find($curso_id);
+        if(!empty($participantes_ids)){
 
+            $participantes = [];
+            foreach ($participantes_ids as $participante_id) {
+                $participante = Participante::find($participante_id);
+                $participante->tipo_asistencia_id = $request->input('tipo_asistencia_id');
+                if($request->input('vista') == 'asistencia'){
+                    $participante->fecha_asistencia = $request->input('fecha');
+                }
+                $participante->save();
+                $participantes[] = $participante;
+            }
+
+        }
+            $curso=Curso::find($curso_id);
         $participantes = Participante::with(['personal.departamento', 'tipos_asistencia'])->where('curso_id', $curso->id)->get();
         $vista ='';
         return view('curso.listas', compact('curso', 'participantes', 'vista'));

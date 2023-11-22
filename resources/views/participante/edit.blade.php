@@ -40,6 +40,8 @@
             @endif
                 <div class="col-auto text-ellipsis text-right">
                     <button type="submit" class="btn btn-primary">Guardar</button>
+                    <input type="hidden" name="curso_id" value="{{ $curso->id }}">
+
                 </div>
         </div>         
                 <table id="Lista" class="table table-striped table-sm text-center align-middle">
@@ -78,7 +80,7 @@
                                 @elseif ($vista ==='justificar')
                                 <div class="form-group">
                                     <select name="tipo_asistencia_id" id="tipo_asistencia_id" class="form-control form-select-sm">
-                                        <option value= "0" >Justificación</option></option>
+                                        <option value= "0" >Justificación</option>
                                         @foreach ($tipos_asistencia as $ta)
                                             <option value="{{ $ta->id }}"> {{$ta->tipo_asistencia}}</option>
                                         @endforeach
@@ -92,7 +94,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                <input type="hidden" name="curso_id" value="{{ $curso->id }}">
                 
         </form>
         </div>

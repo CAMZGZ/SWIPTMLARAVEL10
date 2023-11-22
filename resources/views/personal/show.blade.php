@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Soocio '.$personal->no_socio)
+@section('title', 'Socio '.$personal->no_socio)
 
 @section('content_header')
 
@@ -14,73 +14,101 @@
             {{ ucwords(strtolower($personal->s_apellido)) }} {{ ucwords(strtolower($personal->nombre)) }}
         </b></h2>
     </div>
+    
+    
+
     <div class="card-body">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#" data-target="contenido1">Informacion Personal</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#" data-target="contenido2">Cursos</a>
+        </li>
+      </ul>
+      
+      <div id="contenido1" style="display: block;">
+        
+        <form class="row g-3">
+          <div class="col-md-4">
+            <label for="p_apellido" class="form-label">Primer Apellido</label></label>
+            <input type="text" class="form-control" id="p_apellido" value="{{$personal->p_apellido}}" disabled>
+          </div>
+          <div class="col-md-4">
+            <label for="s_apellido" class="form-label">Segundo Apellido</label>
+            <input type="text" class="form-control" id="s_apellido" value="{{$personal->s_apellido}}" disabled>
+          </div>
+          <div class="col-md-4">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" value="{{$personal->nombre}}" disabled>
+          </div>
+          <div class="col-12">
+            <label for="curp" class="form-label">CURP</label>
+            <input type="text" class="form-control" id="curp" value="{{$personal->curp}}" disabled>
+          </div>
+          <div class="col-4">
+            <label for="no_socio" class="form-label">Número de socio</label>
+            <input type="number" class="form-control" id="no_socio" value="{{$personal->no_socio}}" disabled>
+          </div>
+          <div class="col-md-4">
+            <label for="fecha_ingreso" class="form-label">Fecha de Ingreso</label>
+            <input type="date" class="form-control" id="fecha_ingreso" value="{{$personal->fecha_ingreso}}" disabled>
+          </div>
+
+          <div class="col-md-4">
+            <label for="Antiguedad" class="form-label">Antiguedad</label>
+            <input type="text" class="form-control" id="Antiguedad" 
+            value="{{(\Carbon\Carbon::parse($personal->fecha_ingreso))->diffInYears(now())}} años"
+            disabled>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="tipo_empleado" class="form-label">Tipo de socio</label>
+              @if ($personal->tipo_personals == 1)
+              <input type="text" class="form-control" id="tipo_empleado" value="Sindicalizado" disabled>    
+              @else
+              <input type="text" class="form-control" id="tipo_empleado" value="Empleado" disabled>
+              @endif
+              
+            </div>
+            <div class="col-md-4">
+              <label for="departamento_id" class="form-label">Departamento</label>
+              <select id="departamento_id" class="form-select" disabled>
+                <option selected value="{{$personal->departamento_id}}">{{$personal->departamento->nombre}}</option>
+              </select>
+            </div>
+            @if (!$personal->departamento->personal )
+                
+            @else
+            <div class="col-md-3">
+              <label for="jefe" class="form-label">Jefe</label>
+              <input type="text" class="form-control" id="jefe" 
+              value="{{ $personal->departamento->personal->p_apellido.' '.$personal->departamento->personal->s_apellido.' '.$personal->departamento->personal->nombre}}">
+            </div>
+            @endif
+          </div>
+      </form>
+      </div>
+      <div id="contenido2" style="display: none;">
         <ul class="list-group">
-            <li class="list-group-item">
-                <form class="row g-3">
-                    <div class="col-md-6">
-                      <label for="inputEmail4" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="inputEmail4">
-                    </div>
-                    <div class="col-md-6">
-                      <label for="inputPassword4" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="inputPassword4">
-                    </div>
-                    <div class="col-12">
-                      <label for="inputAddress" class="form-label">Address</label>
-                      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                    </div>
-                    <div class="col-12">
-                      <label for="inputAddress2" class="form-label">Address 2</label>
-                      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                    </div>
-                    <div class="col-md-6">
-                      <label for="inputCity" class="form-label">City</label>
-                      <input type="text" class="form-control" id="inputCity">
-                    </div>
-                    <div class="col-md-4">
-                      <label for="inputState" class="form-label">State</label>
-                      <select id="inputState" class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                      </select>
-                    </div>
-                    <div class="col-md-2">
-                      <label for="inputZip" class="form-label">Zip</label>
-                      <input type="text" class="form-control" id="inputZip">
-                    </div>
-                    <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label class="form-check-label" for="gridCheck">
-                          Check me out
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-12">
-                      <button type="submit" class="btn btn-primary">Sign in</button>
-                    </div>
-                  </form>
-            </li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-            <li class="list-group-item">A fourth item</li>
-            <li class="list-group-item">And a fifth one</li>
-          </ul>
-        <h4 >CURP</h4>
-        <p class="card-text">{{$personal->curp}} </p>
+          @forelse ($personal->cursos as $c)
+          <li class="list-group-item">
+            {{$c->nombre_curso}}
+          </li> 
+          @empty
+          <li class="list-group-item">
+            No ha tomado cursos aún D:
+          </li>
+          @endforelse
+          
+        </ul>
+      </div>
     </div>
     <div class="card-foot text-muted">
-        Footer
+        
     </div>
 </div>
-{{$departamento->nombre}}
-@if ($jefe=="")
-    
-@else
-{{$jefe->curp}}
 
-@endif
 @stop
 
 @section('css')
@@ -89,4 +117,19 @@
 
 @section('js')
     <script> console.log('Hi!'); </script>
+    <script>
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = this.getAttribute('data-target');
+          document.querySelectorAll('[id^="contenido"]').forEach(contenido => {
+            if (contenido.id === target) {
+              contenido.style.display = 'block';
+            } else {
+              contenido.style.display = 'none';
+            }
+          });
+        });
+      });
+    </script>
 @stop

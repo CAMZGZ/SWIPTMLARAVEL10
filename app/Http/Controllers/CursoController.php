@@ -171,6 +171,7 @@ class CursoController extends Controller
         ->selectRaw('MAX(departamentos.ceco) as ceco')
         ->groupBy( 'departamentos.nombre' )
         ->where('participantes.curso_id', $curso->id)
+        ->where('personals.tipo_personals', '1')
         ->get();
 
         $departamentos = [];
@@ -228,6 +229,25 @@ class CursoController extends Controller
         
     }
 
+    public function asistenciap(){
+
+        $personal = Personal::where('tipo_personals', '0')->get();
+
+        return view('curso.asistenciap.asistenciap', compact('personal'));
+
+
+    }
+
+    public function apdf(){
+
+        $personal = Personal::where('tipo_personals', '0')->get();
+        $pdf = Pdf::loadView('curso.asistenciap.pdf', compact('personal'));
+        return $pdf->download('Cursos a los que han asistido el personal .pdf');
+
+        return view('curso.asistenciap.pdf', compact('personal'));
+
+
+    }
 
     
 }

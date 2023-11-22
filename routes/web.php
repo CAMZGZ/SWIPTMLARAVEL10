@@ -57,6 +57,10 @@ Route::resource('personal', PersonalController::class);
 //Reportes
 Route::get('/curso/{curso}/conteotr', [CursoController::class, 'conteotr'])->name('curso.conteotr');
 Route::get('/curso/{curso}/pdfconteo', [CursoController::class, 'conteotrd'])->name('curso.pdfconteo');
+Route::get('/curso/asistenciap', [CursoController::class, 'asistenciap'])->name('curso.asistenciap');
+Route::get('/curso/asistenciap/pdf', [CursoController::class, 'apdf'])->name('curso.apdf');
+
+
 
 
 
@@ -77,9 +81,9 @@ Route::get('/asesor/bajas', [AsesorController::class, 'bajas'])->name('asesor.ba
 Route::resource('asesor', AsesorController::class);
 
 //Examen
-Route::post('/examene/activar', [ExameneController::class, 'activar'])->name('examen.activar');
-Route::get('/examene/bajas', [ExameneController::class, 'bajas'])->name('examen.bajas');
-Route::resource('examen', ExameneController::class);
+Route::post('/examene/activar', [ExameneController::class, 'activar'])->name('examene.activar');
+Route::get('/examene/bajas', [ExameneController::class, 'bajas'])->name('examene.bajas');
+Route::resource('examene', ExameneController::class);
 
 //Participantes
 Route::post('/participante/agregarSindicalizados', [ParticipanteController::class, 'agregarSindicalizados'])
