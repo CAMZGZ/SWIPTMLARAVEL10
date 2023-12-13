@@ -74,7 +74,7 @@
             </tbody>
         </table>
     </div>
-    <div class="text-right mb-2">
+    <div class=" card-footer text-right mb-2">
 
         <a class="btn btn-warning" 
         href="{{ route('curso.listas', $curso->id) }}" 

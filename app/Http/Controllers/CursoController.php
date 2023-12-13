@@ -39,7 +39,7 @@ class CursoController extends Controller
     {
         //
         $empresas = Empresa::where('estatus', 1)->get();
-        $personals = Personal::where('sindicalizado', 0)->get();
+        $personals = Personal::where('tipo_personals', 0)->get();
         $curso_categorias = curso_categoria::all();
         $asesores = Asesor::all();
         
@@ -242,9 +242,8 @@ class CursoController extends Controller
 
         $personal = Personal::where('tipo_personals', '0')->get();
         $pdf = Pdf::loadView('curso.asistenciap.pdf', compact('personal'));
-        return $pdf->download('Cursos a los que han asistido el personal .pdf');
+        return $pdf->download('Cursos a los que han asistido los empleados.pdf');
 
-        return view('curso.asistenciap.pdf', compact('personal'));
 
 
     }

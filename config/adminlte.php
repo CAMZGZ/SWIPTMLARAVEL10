@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => true,
+    'use_ico_only' => false,
     'use_full_favicon' => false,
 
     /*
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'dashboard',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -332,18 +332,10 @@ return [
                     'url'     => '#',
                     'submenu' => [
                         [
-                            'text' => 'Listas asistencia',
-                            'url'  => '#',
+                            'text' => 'Asistencia Empleados',
+                            'url'  => 'curso/asistenciap',
                         ],
-                        [
-                            'text' => 'Faltas por Equipo',
-                            'url' => '#',
-                        ],
-                        [
-                            'text'    => 'Asistencia Equipo',
-                            'url'     => '#',
-                        
-                        ],
+                    
                     ],
                 ],
                 [
@@ -384,9 +376,8 @@ return [
             'url'         => 'departamento',
             'icon'        => 'fas fa-fw fa-building',
             'icon_color' => 'light',
-            'label'       => 4,
-            'label_color' => 'success',
         ],
+        /*
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -399,6 +390,7 @@ return [
             'url'  => 'profile',
             'icon' => 'fas fa-fw fa-lock',
         ],
+        */  
         /*[
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',

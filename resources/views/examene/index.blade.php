@@ -17,14 +17,7 @@
                 <h2 style="text-indent: 0.4cm;"><b>Examenes</b></h2>
             </div>
             <div class="card-body">
-                <div class="text-right mb-2">
-                    <a class="btn btn-primary" href="{{route('examene.create')}}" role="button" onclick="">
-                        <i class="fas fa-fw fa-plus"> </i>
-                    </a>
-                    <a class="btn btn-warning" href="{{ route('examene.bajas') }}" role="button" onclick="">
-                        <i class="fas fa-fw fa-trash"></i>
-                    </a>
-                </div>
+            
                 <div class="table-responsive"> 
                 <table id="myTable" class="table table-striped, align-middle">
                     <thead class="table-dark">

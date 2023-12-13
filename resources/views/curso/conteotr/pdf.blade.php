@@ -51,6 +51,18 @@
             
     <thead>
         <tr>
+            <th colspan="7" class="text-center">
+                <img src="vendor\swiptm\img\encabezado_2.png" alt="" width="700px">
+
+            </th>
+
+        </tr>
+        <tr>
+            <th colspan="7">
+                <br>
+            </th>
+        </tr>
+        <tr>
             <th colspan="7" class="table-title text-center">
                 <h1><b>Asistencia a curso: {{$curso->nombre_curso}}</b></h1>
                 <h2><b> {{ \Carbon\Carbon::parse($curso->fecha_inicio)->format('d') }} al 

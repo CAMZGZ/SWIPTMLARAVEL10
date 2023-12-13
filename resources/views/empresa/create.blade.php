@@ -28,8 +28,8 @@
     </div>  
 
     <div class="text-right mb-6">
-        <button type="submit" class="btn btn-success">Guardar</button> 
-        <a class="btn btn-danger" href="{{route('empresa.index')}}" role="button" onclick=""> Cancelar</a> 
+        <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i></button> 
+        <a class="btn btn-danger" href="{{route('empresa.index')}}" role="button" onclick=""> <i class="bi bi-arrow-90deg-left"></i></a> 
     </div>  
 </Form>
 @stop

@@ -5,8 +5,11 @@
 @section('content_header')
 
 @stop
+@section('plugins.Sweetalert2', true)
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <br>
 <div class="card">
     <div class="card-header">
@@ -15,12 +18,11 @@
         </b></h2>
     </div>
     
-    
 
     <div class="card-body">
-      <ul class="nav nav-tabs">
+      <ul class="nav nav-tabs nav-primary">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#" data-target="contenido1">Informacion Personal</a>
+          <a class="nav-link active" aria-current="page" href="#" data-target="contenido1">Información Personal</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="#" data-target="contenido2">Cursos</a>
@@ -87,21 +89,86 @@
             </div>
             @endif
           </div>
-      </form>
+        </form>
       </div>
       <div id="contenido2" style="display: none;">
-        <ul class="list-group">
-          @forelse ($personal->cursos as $c)
-          <li class="list-group-item">
-            {{$c->nombre_curso}}
-          </li> 
-          @empty
-          <li class="list-group-item">
-            No ha tomado cursos aún D:
-          </li>
-          @endforelse
-          
-        </ul>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+
+              <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="card text-center">
+                  <div class="card-body ">
+                    <h5>Número de cursos a los que ha asistido</h5>
+                    <p class="card-text"><b><font size=6>
+                      {{$personal->cursosAsistidos->count()}}
+                    </font> </b></p>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-sm-6 text-center">
+                <div class="card text-center">
+                  <div class="card-body ">
+                    <h5 >Número de cursos a los que no asistio</h5>
+                    <p class="card-text"><b><font size=6>
+                      {{$personal->cursosNoAsistidos->count()}}
+                    </font> </b></p>     
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-sm-6 text-center">
+                <div class="card text-center">
+                  <div class="card-body ">
+                    <h5 >Cursos a los que asistio</h5>
+                    <ul class="list-group">
+                    @forelse ($personal->cursosAsistidos as $c)
+                    
+                    <li class="list-group-item text-left">
+                      {{$c->nombre_curso}}
+                    </li> 
+                    @empty
+                        <li class="list-group-item">
+                          No a aisitido a ningún curso aún
+                          <br>
+                          <i class="bi bi-emoji-frown"></i>
+                        </li>
+                    @endforelse
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-sm-6 text-center">
+                <div class="card text-center">
+                  <div class="card-body ">
+                    <h5 >Cursos a los que no asistio</h5>
+                    <ul class="list-group">
+                      @forelse ($personal->cursosNoAsistidos as $cn)
+                      
+                      <li class="list-group-item text-left">
+                        {{$cn->nombre_curso}}
+                      </li> 
+                      @empty
+                          <li class="list-group-item">
+                            Ha Asistido a todos los cursos
+                            <br>
+                            <i class="bi bi-emoji-smile"></i>
+                          </li>
+                      @endforelse
+                      </ul>   
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
     <div class="card-foot text-muted">
@@ -118,7 +185,33 @@
 @section('js')
     <script> console.log('Hi!'); </script>
     <script>
-      document.querySelectorAll('.nav-link').forEach(link => {
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('.unlink a').addEventListener('click', function (e) {
+          e.preventDefault();
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              );
+              // Add your delete logic here, for example, using Ajax to call the delete route
+            }
+          });
+        });
+      });
+    </script>
+
+    <script>
+      document.querySelectorAll('.nav-primary .nav-link').forEach(link => {
         link.addEventListener('click', function(e) {
           e.preventDefault();
           const target = this.getAttribute('data-target');

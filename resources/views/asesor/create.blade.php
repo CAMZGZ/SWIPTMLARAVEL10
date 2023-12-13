@@ -38,7 +38,7 @@
         </div>
     </div>
     
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
 </form>
 
 @stop

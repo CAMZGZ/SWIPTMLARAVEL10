@@ -3,23 +3,25 @@
 @section('title', 'Empresas')
 
 @section('content_header')
-    <h1>Empresas</h1>
 @stop
 @section('plugins.Datatables', true)
 @section('plugins.Databuttons', true)
 
 
 @section('content')
-<div id="t_empresas">
-    <div class="table-responsive">
-            <div class="text-right mb-2">
-                <a class="btn btn-primary" href="{{route('empresa.create')}}" role="button" onclick=""> Agregar</a>
-                <button @click ="excel" class="btn btn-success">Excel</button>
-                <button  @click = "pdf" class="btn btn-danger">PDF</button>
-                <a class="btn btn-warning" href="{{ route('empresa.bajas') }}" role="button" onclick=""> Bajas</a>
-            </div>    
-    
-        <table id="myTable" class="table table-striped, align-middle">
+<br>
+
+<div class="card">
+    <div class="card-header">
+        <h2>Empresas</h2>
+
+    </div>
+    <div class="card-body">
+        <div class="text-right mb-2">
+            <a class="btn btn-primary" href="{{route('empresa.create')}}" role="button" onclick=""><i class="bi bi-plus-lg"></i></a>
+            <a class="btn btn-warning" href="{{ route('empresa.bajas') }}" role="button" onclick=""> <i class="bi bi-trash-fill"></i></a>
+        </div>
+        <table id="Empresas" class="table table-striped, align-middle">
             <thead class="table-dark">
                 <tr>
                     <th>Razon Social</th> 
@@ -31,7 +33,7 @@
                 @forelse ($empresas as $e )
                 <tr class="align-middle">
                     <td> 
-                        <a href="{{route('empresa.show', $e->id)}}" class="text-dark"> 
+                        <a href="{{route('empresa.show', $e->id)}}" class="text-decoration-none text-reset"> 
                         {{$e->razon_social}}
                     </a>
                 </td>
@@ -48,11 +50,22 @@
                     
                 </tr>    
                 @empty
-                    <p> No data</p>
+                    <tr>
+                        <td colspan="3">
+                            Sin datos
+                        </td>
+                    </tr>
                 @endforelse
                 
             </tbody>
         </table>
+    </div>
+</div>
+<div id="t_empresas">
+    <div class="table-responsive">
+    
+    
+
     </div>
 </div>
 <div id="example-table"></div>
@@ -65,7 +78,56 @@
 @section('js')
     <script> console.log('Hi!'); </script>
     <script>
-        let table = new DataTable('#myTable');
+        $(document).ready(function() {
+            $('#Empresas').DataTable({
+                "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron Resultados",
+                "info": "Página _PAGE_ de _PAGES_",
+                "infoEmpty": "No se encontraron datos",
+                "infoFiltered": "(Obtenido de _MAX_ total registros)",
+                "search": "Buscar",
+                "paginate": {
+                    "previous": "Anterior",
+                    "next": "Siguiente",
+                    "first": "Primero",
+                    "last": "Ultimo"
+                }
+                },
+                "autoWidth": false,
+                "responsive": true,
+                "dom": "Bfrtip",
+                "buttons": [
+                    {
+                    extend: 'copyHtml5',
+                    text: '<i class="fas fa-fw fa-copy"></i>',
+                    className: 'btn btn-warning',
+                    exportOptions: {
+                        columns: [0, 1] // Columnas a copiar
+                    }
+                },
+                {
+                    "extend": "excelHtml5",
+                    "text": '<i class="fas fa-fw fa-file-excel"></i>',
+                    "className": "btn btn-success",
+                    "exportOptions": {
+                    "columns": [0, 1] // Columnas a exportar
+                    }
+                },
+                
+               
+                {
+                    "extend": "pdfHtml5",
+                    "text": '<i class="fas fa-fw fa-file-pdf"></i>',
+                    "className": "btn btn-danger",
+                    "exportOptions": {
+                    "columns": [0, 1] // Columnas a exportar
+                    }
+                }
+                ]
+            });
+            });
+
     </script>
     
 @stop

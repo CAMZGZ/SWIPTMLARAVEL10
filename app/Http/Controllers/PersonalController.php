@@ -25,6 +25,8 @@ class PersonalController extends Controller
     public function create()
     {
         //
+        $departamentos=departamento::where('estatus', 1)->get();
+        return view(('personal.create'), compact('departamentos'));
     }
 
     /**

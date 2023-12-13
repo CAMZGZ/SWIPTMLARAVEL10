@@ -9,11 +9,11 @@
 @section('plugins.Databuttons', true)
 
 @section('content')
+<br>
+
 <div class="card">
-    <br>
-    <div class="card-head">
-        <p></p>
-        <h2 style="text-indent: 0.4cm;"><b>Asesores</b></h2>
+    <div class="card-header">
+        <h2 ><b>Asesores</b></h2>
     </div>
     <div class="card-body">
         <!--
@@ -45,8 +45,25 @@
                         {{$a -> razon_social}}
                     </a>
                 </td>
-                    <td>{{$a->rfc}}</td>
-                    <td></td>
+                    <td>
+                        @if (!$a->rfc)
+                            RFC no disponible
+                        @else
+                        {{$a->rfc}}    
+                        @endif
+                        
+                    </td>
+                    <td>
+                        <ul>
+                        @forelse ($a->curso as $c)
+                        <li>
+                            {{$c->nombre_curso}}    
+                        </li>  
+                        @empty
+                            No ha impartido cursos aún
+                        @endforelse
+                        </ul>
+                    </td>
                     
                     <td class="align-middle"> 
                     <center>
@@ -86,10 +103,10 @@
             $('#AsesoresT').DataTable({
                 "language": {
                 "lengthMenu": "Mostrar _MENU_ registros por página",
-                "zeroRecords": "Nothing found - sorry",
+                "zeroRecords": "No se encontraron Resultados",
                 "info": "Página _PAGE_ de _PAGES_",
-                "infoEmpty": "No records available",
-                "infoFiltered": "(filtered from _MAX_ total records)",
+                "infoEmpty": "No se encontraron datos",
+                "infoFiltered": "(Obtenido de _MAX_ total registros)",
                 "search": "Buscar",
                 "paginate": {
                     "previous": "Anterior",

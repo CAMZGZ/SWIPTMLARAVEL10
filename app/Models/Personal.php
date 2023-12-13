@@ -35,4 +35,17 @@ class personal extends Model
         return $this->belongsToMany(Curso::class, 'participantes', 'personal_id', 'curso_id');
     }
 
+    // En el modelo Personal
+    public function cursosAsistidos()
+    {
+        return $this->belongsToMany(Curso::class, 'participantes', 'personal_id', 'curso_id')
+            ->wherePivot('tipo_asistencia_id', '1');
+    }
+
+    public function cursosNoAsistidos()
+    {
+        return $this->belongsToMany(Curso::class, 'participantes', 'personal_id', 'curso_id')
+            ->wherePivot('tipo_asistencia_id', '0');
+    }
+
 }

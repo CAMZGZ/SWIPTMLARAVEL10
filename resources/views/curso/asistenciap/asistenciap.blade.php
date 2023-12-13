@@ -1,15 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', 'Cursos A Los Que Ha Asistido El Personal')
+@section('title', 'Cursos A Los Que Han Asistido Los Empleados')
 
 @section('content_header')
 
 @stop
 
 @section('content')
+<br>
     <div class="card">
         <div class="card-header">
-            <h2><b>Cursos A Los Que Han Asistido El Personal</b></h2>
+            <h2><b>Cursos A Los Que Han Asistido Los Empleados</b></h2>
         </div>
         <div class="card-body">
             <div class="card-body">
@@ -34,16 +35,16 @@
                             <td>{{$p->p_apellido.' '.$p->s_apellido.' '.$p->nombre}}</td>
                             <td>{{$p->departamento->nombre}}</td>
                             <td>
-                                @forelse ($p->cursos as $c)
                                 <ul>
                                     <li>
-                                        {{$c->nombre_curso}}
-                                    </li>
-                                </ul>
-                                    
+                                @forelse ($p->cursosAsistidos as $c)
+                                
+                                        {{$c->nombre_curso}}   
                                 @empty
-                                    No ha asistido a ningún curso
+                                No ha tomado cursos aún <i class="bi bi-emoji-frown"></i>
                                 @endforelse
+                            </li>
+                        </ul>
                             </td>
                         </tr>
                     @empty

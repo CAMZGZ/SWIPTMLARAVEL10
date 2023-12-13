@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Departamento;
 use App\Http\Controllers\Controller;
 use App\Models\curso;
+use App\Models\Empresa;
+use App\Models\personal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,6 +28,9 @@ class DepartamentoController extends Controller
     public function create()
     {
         //
+        $personal=personal::where('tipo_personals', 0)->get();
+        $empresa=Empresa::where('estatus', 1)->get();
+        return view('departamento.create', compact('personal', 'empresa'));
     }
 
     /**

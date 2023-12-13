@@ -9,6 +9,7 @@ use App\Http\Controllers\AsesorController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\ExameneController;
 use App\Http\Controllers\ParticipanteController;
+use App\Http\Controllers\WelcomeController;
 
 
 
@@ -22,9 +23,12 @@ use App\Http\Controllers\ParticipanteController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [WelcomeController::class, 'index'])->name('/')->middleware('auth');
+
+//Route::get('/', function () {
+//    return view('welcome');
+//})->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -59,9 +63,6 @@ Route::get('/curso/{curso}/conteotr', [CursoController::class, 'conteotr'])->nam
 Route::get('/curso/{curso}/pdfconteo', [CursoController::class, 'conteotrd'])->name('curso.pdfconteo');
 Route::get('/curso/asistenciap', [CursoController::class, 'asistenciap'])->name('curso.asistenciap');
 Route::get('/curso/asistenciap/pdf', [CursoController::class, 'apdf'])->name('curso.apdf');
-
-
-
 
 
 //Curso

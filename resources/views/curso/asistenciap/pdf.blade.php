@@ -4,17 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!--
-        <img src="\public\vendor\swiptm\img\ptml_ogo.png">
-    -->
+
 </head>
 <body>
 
     <style>
         .table-title{
-            background-color: rgb(203, 29, 29);
+            background-color: rgb(254, 254, 254);
 
-            color: whitesmoke;
+            color: rgb(0, 0, 0);
         }
         .table-encabezado{
             background-color: #455963;
@@ -52,9 +50,15 @@
     <table id="AsistenciaP" class="table">
         <thead>
             <tr>
+                <th colspan="4" class="text-center">
+                    <img src="vendor\swiptm\img\encabezado_2.png" alt="" width="700px">
+
+                </th>
+            </tr>
+            <tr>
                 <th colspan="4" class="table-title text-center">
                     <br>
-                    <font size=5>Cursos A Los Que Han Asistido El Personal</font>
+                    <font size=5>Cursos A Los Que Han Asistido Los Empleados</font>
                     <br>
                 </th>
             </tr>
@@ -74,16 +78,15 @@
                     <td>{{$p->p_apellido.' '.$p->s_apellido.' '.$p->nombre}}</td>
                     <td>{{$p->departamento->nombre}}</td>
                     <td>
-                        @forelse ($p->cursos as $c)
                         <ul>
                             <li>
-                                {{$c->nombre_curso}}
+                            @forelse ($p->cursosAsistidos as $c)
+                                {{$c->nombre_curso}}   
+                            @empty
+                            No ha tomado cursos aún <i class="bi bi-emoji-frown"></i>
+                            @endforelse
                             </li>
                         </ul>
-                            
-                        @empty
-                            No ha asistido a ningún curso
-                        @endforelse
                     </td>
                 </tr>
             @empty

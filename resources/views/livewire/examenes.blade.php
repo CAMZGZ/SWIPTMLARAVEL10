@@ -122,7 +122,13 @@
                             <td>       </td>
                             <td><b>Resultados</b></td>
                             <td> Examentes realizados: {{$cuenta->total_registros}} </td>
+                            @if ($cuenta->total_registros ===0)
+                            <td >Promedio General: 0.0 </td>
+
+                            @else
                             <td >Promedio General: {{ number_format(($cuenta->suma_calificaciones / $cuenta->total_registros), 2) }} </td>
+
+                            @endif
                         </tr>
                     </tbody>
                 </table>
